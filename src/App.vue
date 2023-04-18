@@ -1,27 +1,37 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <div class="app" id="app">
+    <Timeline />
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import { defineComponent, ref } from "vue";
+import Timeline from "./components/TimeLine.vue";
+import { MediaBlock } from "@/store/mediaBlock";
+import { useStore } from "vuex";
 
 export default defineComponent({
-  name: 'App',
   components: {
-    HelloWorld
-  }
+    Timeline,
+  },
+  setup() {
+    const mediaBlocks = ref([] as MediaBlock[]);
+    const store = useStore();
+    store.dispatch("loadMediaBlocks").then((loadedMediaBlocks: MediaBlock[]) => {
+      mediaBlocks.value = loadedMediaBlocks;
+    }).catch((error) => {
+      console.log(error);
+    });
+
+    return {
+      mediaBlocks,
+    };
+  },
 });
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style>
+.app {
+  height: 100vh;
 }
 </style>

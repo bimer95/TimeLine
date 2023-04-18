@@ -1,14 +1,12 @@
-import { createStore } from 'vuex'
+import { createStore } from "vuex";
+import mediaBlock from "./mediaBlock";
+import modal from "./modal";
 
-export default createStore({
-  state: {
-  },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
-})
+const store = createStore({
+    modules: {
+        mediaBlock,
+        modal,
+    }
+});
+
+export default store;
